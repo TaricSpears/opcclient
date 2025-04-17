@@ -3,12 +3,13 @@
 #include <open62541/plugin/log_stdout.h>
 #include <string>
 
-bool connection(UA_Client* client, const std::string& endpoint, const std::string& username, const std::string& password) {
+inline UA_Client* connection(const std::string& endpoint, const std::string& username, const std::string& password) {
     // Creazione del client
-    client = UA_Client_new();
+    UA_Client* client = UA_Client_new();
     if (!client) {
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Errore nella creazione del client.");
-        return false;
+
+        return nullptr;
     }
 
     // Configurazione del client
@@ -25,9 +26,9 @@ bool connection(UA_Client* client, const std::string& endpoint, const std::strin
     if (retval != UA_STATUSCODE_GOOD) {
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connessione fallita con codice: %s", UA_StatusCode_name(retval));
         UA_Client_delete(client);
-        return false;
+        return nullptr;
     }
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connessione stabilita con successo.");
-    return true;
+    return client;
 }

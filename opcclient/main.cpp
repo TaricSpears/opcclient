@@ -1,19 +1,19 @@
 #include <open62541/client_config_default.h>
 #include <open62541/client_highlevel.h>
 #include <open62541/plugin/log_stdout.h>
-#include "../connection.h"
+#include "connection.h"
+#include <iostream>
 
 int main(void) {
-    UA_Client* client = UA_Client_new();
-    UA_ClientConfig_setDefault(UA_Client_getConfig(client));
-    UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://FX-10000:4840");
-    if (retval != UA_STATUSCODE_GOOD) {
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-            "The connection failed with status code %s",
-            UA_StatusCode_name(retval));
-        UA_Client_delete(client);
-        return 0;
-    }
+	//ask user and password
+	std::string username;
+	std::string password;
+	std::cout << "Enter username: ";
+	std::cin >> username;
+	std::cout << "Enter password: ";
+	std::cin >> password;
+	
+	UA_Client* client = connection("opc.tcp://FX-10000:4840", "username", "password");
 
     /* Read the value attribute of the node. UA_Client_readValueAttribute is a
      * wrapper for the raw read service available as UA_Client_Service_read. */
@@ -23,7 +23,7 @@ int main(void) {
     /* NodeId of the variable holding the current time */
    
     const UA_NodeId nodeId = UA_NS0ID(SERVER_SERVERSTATUS_CURRENTTIME);
-    retval = UA_Client_readValueAttribute(client, nodeId, &value);
+    UA_StatusCode retval = UA_Client_readValueAttribute(client, nodeId, &value);
 
     if (retval == UA_STATUSCODE_GOOD &&
         UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) {

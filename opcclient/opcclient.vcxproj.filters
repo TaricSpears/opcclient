@@ -13,13 +13,19 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="File di origine\include">
+      <UniqueIdentifier>{1be7bf30-582c-474e-8459-4a595309fb8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File di origine\src">
+      <UniqueIdentifier>{fc223598-205a-4eb1-8dd7-a495c1ce97c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>File di origine</Filter>
-    </ClCompile>
     <ClCompile Include="connection.h">
-      <Filter>File di origine</Filter>
+      <Filter>File di origine\include</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>File di origine\src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
