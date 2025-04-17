@@ -27,5 +27,8 @@
     <ClCompile Include="main.cpp">
       <Filter>File di origine\src</Filter>
     </ClCompile>
+    <ClCompile Include="discovery.h">
+      <Filter>File di origine\include</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

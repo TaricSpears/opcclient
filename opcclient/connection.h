@@ -2,33 +2,11 @@
 #include <open62541/client_highlevel.h>
 #include <open62541/plugin/log_stdout.h>
 #include <string>
+#include <stdexcept>
 
-inline UA_Client* connection(const std::string& endpoint, const std::string& username, const std::string& password) {
-    // Creazione del client
-    UA_Client* client = UA_Client_new();
-    if (!client) {
-        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Errore nella creazione del client.");
+inline bool connection(UA_Client* client, const std::string& endpoint, const std::string& username, const std::string& password) {
 
-        return nullptr;
-    }
-
-    // Configurazione del client
-    UA_ClientConfig_setDefault(UA_Client_getConfig(client));
-
-    // Impostazione delle credenziali
-    UA_UserNameIdentityToken* userIdentity = UA_UserNameIdentityToken_new();
-    UA_String_init(&userIdentity->userName);
-    UA_String_init(&userIdentity->password);
-    userIdentity->userName = UA_STRING_ALLOC(username.c_str());
-    userIdentity->password = UA_STRING_ALLOC(password.c_str());
-
-    UA_StatusCode retval = UA_Client_connectUsername(client, endpoint.c_str(), username.c_str(), password.c_str());
-    if (retval != UA_STATUSCODE_GOOD) {
-        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connessione fallita con codice: %s", UA_StatusCode_name(retval));
-        UA_Client_delete(client);
-        return nullptr;
-    }
-
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Connessione stabilita con successo.");
-    return client;
+        UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+        UA_StatusCode retval = UA_Client_connectUsername(client, endpoint.c_str(), username.c_str(), password.c_str());
+    return retval;
 }
