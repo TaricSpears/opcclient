@@ -5,7 +5,7 @@
 int main(void) {
     UA_Client* client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
-    UA_StatusCode retval = UA_Client_connectUsername(client, "opc.tcp://FX-10000:4840", "fenix - opc", "opc - fenix");
+    UA_StatusCode retval = UA_Client_connectUsername(client, "opc.tcp://FX-10000:4840", "fenix-opc", "opc-fenix");
     if (retval != UA_STATUSCODE_GOOD) {
         UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
             "The connection failed with status code %s",
@@ -42,4 +42,4 @@ int main(void) {
     UA_Variant_clear(&value);
     UA_Client_delete(client); /* Disconnects the client internally */
     return 0;
-}
+}*/
